@@ -42,6 +42,9 @@ public class NMS_1_12 {
     public static boolean hasRanks(ItemStack itemStack) {
         net.minecraft.server.v1_12_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(itemStack);
         NBTTagCompound nmsItemCompound = (nmsItem.hasTag()) ? nmsItem.getTag() : new NBTTagCompound();
+        if (nmsItemCompound == null) {
+            return false;
+        }
 
         try {
             String rankFrom = nmsItemCompound.getString("rankFrom");
@@ -49,7 +52,8 @@ public class NMS_1_12 {
             String rankTo = nmsItemCompound.getString("rankTo");
             String rankToName = nmsItemCompound.getString("rankToName");
             String unique = nmsItemCompound.getString("voucherUnique");
-            return true;
+
+            return !rankFrom.equals("") && !rankFromName.equals("") && !rankTo.equals("") && !rankToName.equals("") && !unique.equals("");
         } catch (Exception ignore) {
             return false;
         }

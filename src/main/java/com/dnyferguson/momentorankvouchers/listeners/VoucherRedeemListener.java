@@ -14,6 +14,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 public class VoucherRedeemListener implements Listener {
     private MomentoRankVouchers plugin;
 
@@ -21,7 +24,7 @@ public class VoucherRedeemListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler (ignoreCancelled = true)
+    @EventHandler
     public void onPlayerUseVoucher(PlayerInteractEvent e) {
         if (!e.getAction().equals(Action.RIGHT_CLICK_AIR) && !e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             return;
@@ -65,8 +68,12 @@ public class VoucherRedeemListener implements Listener {
 
         player.getInventory().remove(item);
         plugin.getSql().executeStatementAsync("UPDATE `vouchers` SET `used`='1' WHERE `unique` = '" + rankup.getUnique() + "'");
+        player.sendMessage(Chat.format("&aYou have successfully redeemed a rankup voucher and have advanced to &f" + rankup.getRankToName() + "&a!"));
 
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent remove " + rankup.getRankFrom());
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent add " + rankup.getRankTo());
+
         System.out.println("[MomentoRankVouchers] User " + player.getName() + " has successfully redeemed a voucher to go from rank " + rankup.getRankFrom() + " -> " + rankup.getRankTo() + "!");
+        plugin.getLogFile().log("[" + Timestamp.from(Instant.now()) + "]" + " User " + player.getName() + " has successfully redeemed a voucher to go from rank " + rankup.getRankFrom() + " -> " + rankup.getRankTo() + "!");
     }
 }

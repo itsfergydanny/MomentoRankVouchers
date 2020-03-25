@@ -16,6 +16,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -151,6 +153,7 @@ public class VoucherCommand implements CommandExecutor {
                 target.getInventory().addItem(note);
 
                 System.out.println("[MomentoRankVouchers] " + sender.getName() + " has successfully given a rank note (" + rankFrom + "->" + rankTo + ") to " + target.getName() + "(" + target.getUniqueId() + ").");
+                plugin.getLogFile().log("[" + Timestamp.from(Instant.now()) + "] " + sender.getName() + " has successfully given a rank note (" + rankFrom + "->" + rankTo + ") to " + target.getName() + "(" + target.getUniqueId() + ").");
                 sender.sendMessage(Chat.format("&ayou have successfully given a rank note (&7" + rankFrom + "&f->&7" + rankTo + "&a) to " + target.getName() + " (" + target.getUniqueId() + ")."));
 
                 target.sendMessage(Chat.format("&aYou have received a rank note!"));
