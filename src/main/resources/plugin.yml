@@ -1,0 +1,5 @@
+name: MomentoRankVouchers
+version: ${project.version}
+main: com.dnyferguson.momentorankvouchers.MomentoRankVouchers
+commands:
+  voucher:

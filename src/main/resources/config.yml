@@ -1,0 +1,8 @@
+# MySQL Credentials
+mysql:
+  ip: 'db.momentonetwork.net'
+  port: '3306'
+  user: 'user'
+  pass: 'pass'
+  db: 'MomentoRankVouchers'
+  max-connections: 2

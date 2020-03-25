@@ -1,0 +1,57 @@
+package com.dnyferguson.momentorankvouchers.nbt;
+
+import com.dnyferguson.momentorankvouchers.objects.Rankup;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagString;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.inventory.ItemStack;
+
+public class NMS_1_12 {
+    public static ItemStack setRanks(ItemStack itemStack, String rankFrom, String rankTo, String rankFromName, String rankToName, String unique) {
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(itemStack);
+        NBTTagCompound nmsItemCompound = (nmsItem.hasTag()) ? nmsItem.getTag() : new NBTTagCompound();
+        if (nmsItemCompound == null) {
+            return null;
+        }
+        nmsItemCompound.set("rankFrom", new NBTTagString(rankFrom));
+        nmsItemCompound.set("rankFromName", new NBTTagString(rankFromName));
+        nmsItemCompound.set("rankTo", new NBTTagString(rankTo));
+        nmsItemCompound.set("rankToName", new NBTTagString(rankToName));
+        nmsItemCompound.set("voucherUnique", new NBTTagString(unique));
+        nmsItem.setTag(nmsItemCompound);
+
+        return CraftItemStack.asBukkitCopy(nmsItem);
+    }
+
+    public static Rankup getRanks(ItemStack itemStack) {
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(itemStack);
+        NBTTagCompound nmsItemCompound = (nmsItem.hasTag()) ? nmsItem.getTag() : new NBTTagCompound();
+        if (nmsItemCompound == null) {
+            return null;
+        }
+
+        String rankFrom = nmsItemCompound.getString("rankFrom");
+        String rankFromName = nmsItemCompound.getString("rankFromName");
+        String rankTo = nmsItemCompound.getString("rankTo");
+        String rankToName = nmsItemCompound.getString("rankToName");
+        String unique = nmsItemCompound.getString("voucherUnique");
+
+        return new Rankup(rankFrom, rankFromName, rankTo, rankToName, unique);
+    }
+
+    public static boolean hasRanks(ItemStack itemStack) {
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(itemStack);
+        NBTTagCompound nmsItemCompound = (nmsItem.hasTag()) ? nmsItem.getTag() : new NBTTagCompound();
+
+        try {
+            String rankFrom = nmsItemCompound.getString("rankFrom");
+            String rankFromName = nmsItemCompound.getString("rankFromName");
+            String rankTo = nmsItemCompound.getString("rankTo");
+            String rankToName = nmsItemCompound.getString("rankToName");
+            String unique = nmsItemCompound.getString("voucherUnique");
+            return true;
+        } catch (Exception ignore) {
+            return false;
+        }
+    }
+}
