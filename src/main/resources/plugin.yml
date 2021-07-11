@@ -1,7 +1,6 @@
 name: MomentoRankVouchers
 version: ${project.version}
 main: com.dnyferguson.momentorankvouchers.MomentoRankVouchers
-api-version: 1.12
 commands:
   voucher:
     aliases: [momentorankvoucher, rankvoucher]
