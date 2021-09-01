@@ -1,8 +1,7 @@
 package com.dnyferguson.momentorankvouchers.listeners;
 
 import com.dnyferguson.momentorankvouchers.MomentoRankVouchers;
-import com.dnyferguson.momentorankvouchers.nbt.NMS_1_12;
-import com.dnyferguson.momentorankvouchers.nbt.NMS_1_8;
+import com.dnyferguson.momentorankvouchers.utils.NBT;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,11 +23,7 @@ public class DeathListener implements Listener {
         Player player = e.getEntity();
         List<ItemStack> itemsToKeep = new ArrayList<>();
         for (ItemStack item : e.getDrops()) {
-            if (plugin.isServerIs1_8() && NMS_1_8.hasRanks(item)) {
-                itemsToKeep.add(item);
-            }
-
-            if (plugin.isServerIs1_12() && NMS_1_12.hasRanks(item)) {
+            if (NBT.hasRanks(item)) {
                 itemsToKeep.add(item);
             }
         }

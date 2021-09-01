@@ -2,9 +2,8 @@ package com.dnyferguson.momentorankvouchers.commands;
 
 import com.dnyferguson.momentorankvouchers.MomentoRankVouchers;
 import com.dnyferguson.momentorankvouchers.mysql.FindResultCallback;
-import com.dnyferguson.momentorankvouchers.nbt.NMS_1_12;
-import com.dnyferguson.momentorankvouchers.nbt.NMS_1_8;
 import com.dnyferguson.momentorankvouchers.utils.Chat;
+import com.dnyferguson.momentorankvouchers.utils.NBT;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -142,13 +141,7 @@ public class VoucherCommand implements CommandExecutor {
                 noteMeta.setLore(lore);
                 note.setItemMeta(noteMeta);
 
-                if (plugin.isServerIs1_8()) {
-                    note = NMS_1_8.setRanks(note, rankFrom, rankTo, rankFromName, rankToName, unique);
-                }
-
-                if (plugin.isServerIs1_12()) {
-                    note = NMS_1_12.setRanks(note, rankFrom, rankTo, rankFromName, rankToName, unique);
-                }
+                note = NBT.setRanks(note, rankFrom, rankTo, rankFromName, rankToName, unique);
 
                 target.getInventory().addItem(note);
 

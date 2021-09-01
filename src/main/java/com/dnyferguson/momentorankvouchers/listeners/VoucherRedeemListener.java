@@ -1,10 +1,9 @@
 package com.dnyferguson.momentorankvouchers.listeners;
 
 import com.dnyferguson.momentorankvouchers.MomentoRankVouchers;
-import com.dnyferguson.momentorankvouchers.nbt.NMS_1_12;
-import com.dnyferguson.momentorankvouchers.nbt.NMS_1_8;
 import com.dnyferguson.momentorankvouchers.objects.Rankup;
 import com.dnyferguson.momentorankvouchers.utils.Chat;
+import com.dnyferguson.momentorankvouchers.utils.NBT;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -38,23 +37,11 @@ public class VoucherRedeemListener implements Listener {
         Player player = e.getPlayer();
 
         Rankup rankup = null;
-        if (plugin.isServerIs1_8()) {
-            if (!NMS_1_8.hasRanks(item)) {
-                return;
-            }
-            rankup = NMS_1_8.getRanks(item);
-        }
-
-        if (plugin.isServerIs1_12()) {
-            if (!NMS_1_12.hasRanks(item)) {
-                return;
-            }
-            rankup = NMS_1_12.getRanks(item);
-        }
-
-        if (rankup == null) {
+        if (!NBT.hasRanks(item)) {
             return;
         }
+
+        rankup = NBT.getRanks(item);
 
         if (player.hasPermission("group." + rankup.getRankTo().toLowerCase())) {
             player.sendMessage(Chat.format("&cYou already have that rank."));
